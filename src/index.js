@@ -248,6 +248,14 @@ class Quote {
     };
   }
 
+  static get pasteConfig() {
+    return {
+      plainPatterns: {
+        yourKey: /.?/i
+      }
+    };
+  }
+
   /**
    * Create wrapper for Tool`s settings buttons:
    * 1. Left alignment
