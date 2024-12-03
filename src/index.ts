@@ -355,6 +355,20 @@ export default class Quote implements BlockTool {
     quote.dataset.placeholder = this._quotePlaceholder;
     caption.dataset.placeholder = this._captionPlaceholder;
 
+    // Enter 키 이벤트 바인딩
+    if (!this.readOnly) {
+      [quote, caption].forEach((element) => {
+        element.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+
+            // 현재 커서 위치에 <br> 삽입
+            this.insertLineBreak();
+          }
+        });
+      });
+    }
+
     container.appendChild(quote);
     container.appendChild(caption);
     return container;
@@ -374,6 +388,26 @@ export default class Quote implements BlockTool {
       text: text?.innerHTML ?? "",
       caption: caption?.innerHTML ?? "",
     });
+  }
+
+  insertLineBreak() {
+    const selection = window.getSelection();
+
+    if (!selection || selection.rangeCount === 0) {
+      return;
+    }
+
+    const range = selection.getRangeAt(0);
+    const br = document.createElement("br");
+
+    // 커서 위치에 <br> 삽입
+    range.insertNode(br);
+
+    // <br> 뒤에 커서 이동
+    range.setStartAfter(br);
+    range.setEndAfter(br);
+    selection.removeAllRanges();
+    selection.addRange(range);
   }
 
   /**
