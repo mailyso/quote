@@ -342,6 +342,7 @@ export default class Quote implements BlockTool {
     const container = make("blockquote", [
       this._CSS.baseClass,
       this._CSS.wrapper,
+      `cdx-quote--${this._data.alignment}`, // 초기 정렬 클래스 추가
     ]);
     const quote = make("div", [this._CSS.input, this._CSS.text], {
       contentEditable: !this.readOnly,
@@ -455,7 +456,15 @@ export default class Quote implements BlockTool {
   _toggleTune(tune: Alignment) {
     this._data.alignment = tune;
 
-    // Dispatch change if quoteElement already exists
-      this._block.dispatchChange();
+    // DOM 업데이트: 정렬 클래스를 적용
+    const quoteElement = this._block.holder.querySelector("blockquote");
+
+    if (quoteElement) {
+      quoteElement.classList.remove("cdx-quote--left", "cdx-quote--center"); // 기존 정렬 클래스 제거
+      quoteElement.classList.add(`cdx-quote--${tune}`); // 새 정렬 클래스 추가
+    }
+
+    // Dispatch change for Editor.js
+    this._block.dispatchChange();
   }
 }

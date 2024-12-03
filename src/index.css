@@ -37,3 +37,11 @@
 .cdx-quote-settings .cdx-settings-button {
   width: 50%;
 }
+
+.cdx-quote--left {
+  text-align: left;
+}
+
+.cdx-quote--center {
+  text-align: center;
+}
