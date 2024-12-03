@@ -1017,7 +1017,7 @@ class m {
   _toggleTune(t) {
     this._data.alignment = t;
     const n = this._block.holder.querySelector("blockquote");
-    console.log(n), n && (n.classList.remove("cdx-quote--left", "cdx-quote--center"), n.classList.add(`cdx-quote--${t}`)), this._block.dispatchChange();
+    n && (n.classList.remove("cdx-quote--left", "cdx-quote--center"), n.classList.add(`cdx-quote--${t}`)), this._block.dispatchChange();
   }
 }
 export {
